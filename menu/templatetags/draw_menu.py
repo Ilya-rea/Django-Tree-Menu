@@ -12,13 +12,11 @@ def draw_menu(context, menu_name):
     all_items = list(
         MenuItem.objects
         .filter(menu__name=menu_name)
-        .select_related('parent')  # для минимизации JOIN'ов
+        .select_related('parent')
     )
 
-    # Определяем активный элемент
     active_item = next((item for item in all_items if item.get_absolute_url() == current_path), None)
 
-    # Собираем путь до активного элемента
     active_path_ids = set()
     if active_item:
         parent = active_item
